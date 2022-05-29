@@ -84,12 +84,16 @@
 
             Console.WriteLine("Введите тип используемых блоков");
             house.BlockTypeUsed = new BuildingBlock((BlockType)userEntryValidation.BuildingBlockTypeIsCorrect(Console.ReadLine()));
+
+            Console.WriteLine("Введите толщину стен в блоках");
+            house.WallThicknessInBlocks = userEntryValidation.EntryIsCorrectQuantity(Console.ReadLine());
             Console.Clear();
 
             Console.WriteLine($"- Общее количество блоков необходимых для строения {house.BlocksToBuildHouseCount(house)} штук." +
                               $"\n- Общий объем блоков {house.BlocksToBuildHouseVolume(house)} метров кубических." +
                               $"\n- Количество блоков в 1 кубическом метре - {house.BlockTypeUsed.BlocksInOneCubicMeter(house.BlockTypeUsed)}" +
                               $"\n- Общий вес строения в килограммах - {house.HouseWeightInKg(house)}");
+            Console.ReadLine();
         }
     }
 }

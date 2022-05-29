@@ -11,6 +11,8 @@ namespace BuildingBlocksCalculate
 
         public BuildingBlock BlockTypeUsed { get; set; }
 
+        public int WallThicknessInBlocks { get; set; }
+
         public Door DoorSize { get; set; }
 
         public Window WindowSize { get; set; }
@@ -18,17 +20,18 @@ namespace BuildingBlocksCalculate
         public override double CubeVolumeCalculate()
         {
             double volumeWithDoorsAndWindows = Math.Round(((this.Length * this.Height * this.Width) - 
-                                               ((this.Length - this.BlockTypeUsed.Length) *
-                                               (this.Width - this.BlockTypeUsed.Width) * 
-                                               (this.Height - this.BlockTypeUsed.Height))), 2);
+                                               ((this.Length - this.BlockTypeUsed.Length * this.WallThicknessInBlocks) *
+                                               (this.Width - this.BlockTypeUsed.Width * this.WallThicknessInBlocks) * 
+                                               (this.Height - this.BlockTypeUsed.Height * this.WallThicknessInBlocks))), 2);
             double volume = Math.Round((volumeWithDoorsAndWindows - 
-                                       (this.DoorSize.Length * this.DoorSize.Width * this.BlockTypeUsed.Width) * DoorsCount - 
-                                       (this.WindowSize.Length * this.WindowSize.Width * this.BlockTypeUsed.Width) * WindowsCount), 2);
+                                       (this.DoorSize.Length * this.DoorSize.Width * this.BlockTypeUsed.Width * this.WallThicknessInBlocks) * DoorsCount - 
+                                       (this.WindowSize.Length * this.WindowSize.Width * this.BlockTypeUsed.Width * this.WallThicknessInBlocks) * WindowsCount), 2);
             return volume;
         }
 
         public int BlocksToBuildHouseCount (House house)
         {
+
             return (int)Math.Ceiling( house.CubeVolumeCalculate() / house.BlockTypeUsed.CubeVolumeCalculate());
         }
 
