@@ -6,12 +6,6 @@ using System.Threading.Tasks;
 
 namespace BuildingBlocksCalculate
 {
-    public enum BlockType
-    {
-        D500 = 1,
-        D600,
-        D700
-    }
     public class BuildingBlock : Cubed
     {
         public BuildingBlock(BlockType blockType)
@@ -44,7 +38,7 @@ namespace BuildingBlocksCalculate
         public double Density { get; set; }
         public BuildingBlock BuildingBlockType { get; set; }
 
-        public int BlocksInOneCubicMeter(BuildingBlock buildingBlock)
+        public int BlocksCountInOneCubicMeter(BuildingBlock buildingBlock)
         {
             return (int)Math.Ceiling(1 / this.CubeVolumeCalculate());
         }

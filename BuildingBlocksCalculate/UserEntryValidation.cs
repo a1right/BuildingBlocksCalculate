@@ -1,101 +1,64 @@
-﻿using System;
+﻿using System.Globalization;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Globalization;
 
 namespace BuildingBlocksCalculate
 {
-    public class UserEntryValidation : IConsoleValidator
+    public class UserEntryValidation
     {
-        public bool DoorIsLargerThenBuilding(House house, Door door)
-        {
-            if (house.Length <= door.Width || house.Height <= door.Length || house.Width <= door.Width)
-            {
-                Console.WriteLine("Ошибка! Сторона двери не может быть больше стороны дома. Введите корректный размер двери");
-                return false;
-            }
-            return true;
-        }
+        
 
-        public double EntryIsCorrect(string input)
+        public double GetEntryParsedToDouble(string input)
         {
-            if (input == null || input == " ")
-            {
-                Console.WriteLine("Число не может быть пустым. Введите число.");
-                EntryIsCorrect(Console.ReadLine());
-            }
-            if (!double.TryParse(input, NumberStyles.Any, CultureInfo.InvariantCulture, out double result))
-            {
-                Console.WriteLine("Число введено некорректно.");
-                EntryIsCorrect(Console.ReadLine());
-            }
+            
+            bool correct = double.TryParse(input,NumberStyles.AllowDecimalPoint ,CultureInfo.CurrentCulture, out double result);
             if (result <= 0)
             {
-                Console.WriteLine("Число не может отрицательным или равным нулю");
-                EntryIsCorrect(Console.ReadLine());
+                correct = false;
             }
+            while(!correct)
+                {
+                Console.WriteLine("Некорректный ввод, попробуйте еще раз");
+                correct = double.TryParse(Console.ReadLine() ,NumberStyles.AllowDecimalPoint , CultureInfo.CurrentCulture, out result);
+                if(result <= 0)
+                    correct = false;
+                }
             return result;
         }
 
-        public int EntryIsCorrectQuantity(string input)
+        public int GetEntryParsedToInt(string input)
         {
-            if (input == null || input == " ")
-            {
-                Console.WriteLine("Число не может быть пустым. Введите число.");
-                EntryIsCorrectQuantity(Console.ReadLine());
-            }
-            if (!int.TryParse(input, out int result))
-            {
-                Console.WriteLine("Число введено некорректно.");
-                EntryIsCorrectQuantity(Console.ReadLine());
-            }
+            UserEntryValidation userEntryValidation = new UserEntryValidation();
+            bool correct = int.TryParse(input,NumberStyles.AllowDecimalPoint ,CultureInfo.CurrentCulture, out int result);
             if (result <= 0)
+                correct = false;
+            while(!correct)
             {
-                Console.WriteLine("Число не может отрицательным или равным нулю");
-                EntryIsCorrectQuantity(Console.ReadLine());
+                Console.WriteLine("Некорректный ввод, попробуйте ещё раз");
+                correct = int.TryParse(Console.ReadLine(), out result);
+                if (result <= 0)
+                    correct = false;
             }
             return result;
         }
 
         public int BuildingBlockTypeIsCorrect(string input)
         {
-            if (input == null || input == " ")
+            bool correct = int.TryParse(input, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out int result);
+            if (result <= 0 || result > Enum.GetNames(typeof(BlockType)).Length)
+                correct = false;
+            while(!correct)
             {
-                Console.WriteLine("Число не может быть пустым. Введите число.");
-                BuildingBlockTypeIsCorrect(Console.ReadLine());
-            }
-            if (!int.TryParse(input, out int result))
-            {
-                Console.WriteLine("Число введено некорректно.");
-                BuildingBlockTypeIsCorrect(Console.ReadLine());
-            }
-            if (result <= 0)
-            {
-                Console.WriteLine("Число не может отрицательным или равным нулю");
-                BuildingBlockTypeIsCorrect(Console.ReadLine());
-            }
-            if (result > Enum.GetNames(typeof(BlockType)).Length)
-            {
-                Console.WriteLine("Число больше чем количество блоков в ассортименте");
-                BuildingBlockTypeIsCorrect(Console.ReadLine());
+                Console.WriteLine("Блока такого типа нет в нашем каталоге");
+                correct = int.TryParse(Console.ReadLine(), out result);
+
             }
             return result;
         }
 
 
 
-        public bool WindowIsLargerThenBuilding(House house, Window window)
-        {
-            if (house.Length <= window.Width || house.Height <= window.Length || house.Width <= window.Width)
-            {
-                Console.WriteLine("Ошибка! Сторона окна не может быть больше стороны дома. Введите корректный размер окна");
-                return false;
-            }
-            return true;
-        }
-
-
+        
+                
+        
     }
 }
