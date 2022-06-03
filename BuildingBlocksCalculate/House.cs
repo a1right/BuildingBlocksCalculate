@@ -116,6 +116,7 @@ namespace BuildingBlocksCalculate
         public void GetWallThicknessInBlocks(House house)
         {
             UserEntryValidation userEntryValidation = new UserEntryValidation();
+            Console.WriteLine("Введите толщину стен в блоках");
             house.WallThicknessInBlocks = userEntryValidation.GetEntryParsedToInt(Console.ReadLine());
         }
 

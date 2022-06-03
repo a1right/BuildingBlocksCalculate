@@ -51,8 +51,6 @@
             
             house.BuildingBlockTypeUsed = house.GetBuildingBlockTypeUsed(house);
             
-
-            Console.WriteLine("Введите толщину стен в блоках");
             house.GetWallThicknessInBlocks(house);
             
             Console.Clear();
